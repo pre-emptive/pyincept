@@ -1,0 +1,7 @@
+---
+# Sample Incept database config. The config provided here will be used
+# to create a SQL Alchemy database engine and connection.
+#
+#  url: 'postgresql://username:password@localhost/databasename'
+#  encoding: latin-1
+#  echo: True

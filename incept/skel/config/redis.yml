@@ -1,0 +1,6 @@
+---
+# Sample Incept Redis config
+# The config here will be used to create a Redis object
+#
+#host: 'localhost'
+#port: 6379

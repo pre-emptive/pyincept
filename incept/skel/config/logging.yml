@@ -1,0 +1,35 @@
+---
+# Sample Incept Logging config
+# Config values here will be used to create a 'logging' object
+#
+# Formatters detailed here: http://docs.python.org/2/library/logging.html#logrecord-attributes
+#version: 1
+#formatters:
+#  simple:
+#    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+#  detail:
+#    format: '%(asctime)s - %(levelname)s - File: %(filename)s - %(funcName)s() - Line: %(lineno)d -  %(message)s'
+
+#loggers:
+#  all:
+#    handlers: [all]
+#    propagate: true
+
+#handlers:
+#    console:
+#    class: logging.StreamHandler
+#    level: INFO
+#    formatter: simple
+#    stream: ext://sys.stdout
+#  all:
+#    class: logging.handlers.TimedRotatingFileHandler
+#    level: DEBUG
+#    formatter: simple
+#    when: W0
+#    backupCount: 4
+#    filename: log/incept.log
+
+#root:
+#  level: DEBUG
+#  handlers: [console, all]
+#propagate: true
