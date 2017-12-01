@@ -4,6 +4,7 @@ import argparse
 import sys
 import os
 import shutil, errno
+import site
 
 logging = None
 pidfile = None
@@ -63,6 +64,13 @@ def start(args):
     global config_data
     config_data = config_obj.get()
 
+    if args.directory:
+        working_directory = args.directory
+    else:
+        working_directory = os.getcwd()
+
+    site.addsitedir(working_directory)
+
     if 'logging' in config_data:
        global logging
        logging_obj = InceptLogging(config_data)
@@ -75,10 +83,7 @@ def start(args):
         import daemon
         import daemon.pidfile
         daemon_args = {}
-        if args.directory:
-            daemon_args['working_directory'] = args.directory
-        else:
-            daemon_args['working_directory'] = os.getcwd()
+        daemon_args['working_directory'] = working_directory
         if args.pidfile:
             daemon_args['pidfile'] = daemon.pidfile.PIDLockFile(args.pidfile)
 

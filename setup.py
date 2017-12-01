@@ -17,7 +17,7 @@ setup(
     url='https://github.com/pre-emptive/pyincept',
     author='Ralph Bolton',
     author_email='devnull@coofercat.com',
-    version='1.0.0',
+    version='1.0.1',
     packages=['incept'],
     scripts=['scripts/incept'],
     package_data={'incept': ['skel/*/*','skel/*/.exists'] },
