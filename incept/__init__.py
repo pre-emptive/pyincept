@@ -14,6 +14,7 @@ daemon_context = None
 database_engine = None
 database = None
 redis = None
+rabbitmq = None
 
 # This mostly from https://stackoverflow.com/a/13696380
 def _get_filenos_from_logging(logging):
@@ -113,6 +114,24 @@ def start(args):
         global database
         database_engine = create_engine(config_data['database']['url'], **db_config)
         database = database_engine.connect()
+
+    if 'rabbitmq' in config_data:
+        import pika
+        for required in ['username','password','host']:
+            if required not in config_data['rabbitmq']:
+                raise KeyError('%s not in RabbitMQ config' % (required))
+        credentials = pika.PlainCredentials(config_data['rabbitmq']['username'], config_data['rabbitmq']['password'])
+        try:
+            vhost = config_data['rabbitmq']['vhost']
+        except KeyError:
+            vhost = '/'
+        parameters = pika.ConnectionParameters(
+                host=config_data['rabbitmq']['host'],
+                credentials=credentials,
+                virtual_host=vhost
+        )
+        global rabbitmq
+        rabbitmq = pika.BlockingConnection(parameters)
 
 def end():
     global daemon_context

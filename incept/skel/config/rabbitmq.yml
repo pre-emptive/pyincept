@@ -1,0 +1,7 @@
+---
+# Sample Incept RabbitMQ config
+# The config here will be used to create a Connection object
+#
+#username: guest
+#password: guest
+#host: localhost
