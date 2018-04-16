@@ -23,7 +23,7 @@ if args.action == 'run':
 
     try:
         import setproctitle
-        setproctitle(appname)
+        setproctitle.setproctitle(appname)
     except:
         pass
 
