@@ -12,6 +12,7 @@ parser.add_argument('-b','--background', help='Daemonise into the background on 
 parser.add_argument('-p','--pidfile', help='Location to write a PID file')
 parser.add_argument('action', nargs='?', default='run', help='Action to take (run or init)')
 parser.add_argument('appname', nargs='?', default='app', help='Application name to run')
+parser.add_argument('-n','--procname', help='Change the process name to this (requires setproctitle)', required=False)
 args = parser.parse_args()
 
 incept.prestart(args)
@@ -21,11 +22,12 @@ if args.action == 'run':
 
     appname = "./app/%s.py" % (args.appname)
 
-    try:
-        import setproctitle
-        setproctitle.setproctitle(appname)
-    except:
-        pass
+    if args.procname:
+        try:
+            import setproctitle
+            setproctitle.setproctitle(args.procname)
+        except:
+            pass
 
     try:
         if incept.logging:
