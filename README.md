@@ -46,3 +46,8 @@ This hopefully makes it easy to run Incept apps from init.d or Systemd start uni
 To install, run something like this:
 
 `pip install git+https://github.com/pre-emptive/pyincept.git`
+
+If you additionally `pip install setproctitle` then the current process name will
+be changed to the application name. This may or may not help in `ps` listings and
+the like.
+
