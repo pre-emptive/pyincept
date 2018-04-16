@@ -22,6 +22,12 @@ if args.action == 'run':
     appname = "./app/%s.py" % (args.appname)
 
     try:
+        import setproctitle
+        setproctitle(appname)
+    except:
+        pass
+
+    try:
         if incept.logging:
             incept.logging.debug("Loading Incept application '%s'" % (appname))
         app = imp.load_source('module_name', appname)
@@ -30,6 +36,7 @@ if args.action == 'run':
         if incept.logging:
             incept.logging.exception("Uncaught Exception: %s: %s" % (type(e), e))
         else:
+            # TODO: Print out stacktrace here!
             print "Uncaught Exception: %s" % (e)
     incept.end()
 elif args.action == 'init':
