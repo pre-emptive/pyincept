@@ -1,7 +1,7 @@
 import unittest
 import logging
 
-from pyincept import *
+from incept import *
 
 dictconfig = {
     'version': 1,
@@ -31,8 +31,4 @@ class TestInceptLogging(unittest.TestCase):
     def test_incept_logging(self):
         l = InceptLogging({ 'logging': dictconfig })
         self.assertIsInstance(l, InceptLogging)
-
-        lg = l.logging
-        print "lg = %s" % (lg)
-
 

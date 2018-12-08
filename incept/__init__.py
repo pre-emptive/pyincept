@@ -1,5 +1,8 @@
-from inceptconfig import InceptConfig
-from inceptlogging import InceptLogging
+from __future__ import print_function
+
+from .inceptconfig import InceptConfig
+from .inceptlogging import InceptLogging
+
 import argparse
 import sys
 import os
@@ -49,7 +52,7 @@ def _rcopy(src, dest):
             _rcopy(s, d)
         else:
             if os.path.isfile(d):
-                print "Warning: Not overwriting existing file %s" % (d)
+                print("Warning: Not overwriting existing file %s" % (d))
             else:
                 shutil.copy(s, d)
 
@@ -57,7 +60,7 @@ def _rcopy(src, dest):
 def init():
     module_path = os.path.dirname(__file__)
     _rcopy("%s/skel" % (module_path), ".")
-    print "Incept project initialised"
+    print("Incept project initialised")
 
 # get going...
 def start(args):

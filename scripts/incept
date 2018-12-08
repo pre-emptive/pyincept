@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-import incept
+from __future__ import print_function
+from . import incept
 import sys
 import argparse
 import os
@@ -39,7 +40,7 @@ if args.action == 'run':
             incept.logging.exception("Uncaught Exception: %s: %s" % (type(e), e))
         else:
             # TODO: Print out stacktrace here!
-            print "Uncaught Exception: %s" % (e)
+            print("Uncaught Exception: %s" % (e))
     incept.end()
 elif args.action == 'init':
     incept.init()

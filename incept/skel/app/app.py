@@ -1,8 +1,10 @@
+from __future__ import print_function
+
 import incept
 
-print "Hello world!"
-print "This is the 'hello world' app running in the Incept framework"
-print "Go ahead and put some proper code in app/app.py"
+print("Hello world!")
+print("This is the 'hello world' app running in the Incept framework")
+print("Go ahead and put some proper code in app/app.py")
 
 # Things made available by Incept are:
 # - logging
