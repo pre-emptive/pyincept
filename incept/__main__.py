@@ -10,13 +10,15 @@ def main():
     # We pass any arguments beyond "--" to the application we call (which can do its own command line
     # processing with it).
     incept_args = sys.argv[1:]
+    app_args = [sys.argv[0]]
     try:
         x = sys.argv.index('--')
     except ValueError:
         pass
     else:
         incept_args = sys.argv[1:x]
-        sys.argv = [sys.argv[0]] + sys.argv[x+1:]
+        app_args = [sys.argv[0]] + sys.argv[x+1:]
+    sys.argv = app_args
 
     parser = argparse.ArgumentParser(description='Incept framework for non-UI Python applications')
     parser.add_argument('-d','--directory', help='Directory to change into before running', required=False)
