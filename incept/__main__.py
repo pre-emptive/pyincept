@@ -7,6 +7,17 @@ import imp
 import incept
 
 def main():
+    # We pass any arguments beyond "--" to the application we call (which can do its own command line
+    # processing with it).
+    incept_args = sys.argv[1:]
+    try:
+        x = sys.argv.index('--')
+    except ValueError:
+        pass
+    else:
+        incept_args = sys.argv[1:x]
+        sys.argv = [sys.argv[0]] + sys.argv[x+1:]
+
     parser = argparse.ArgumentParser(description='Incept framework for non-UI Python applications')
     parser.add_argument('-d','--directory', help='Directory to change into before running', required=False)
     parser.add_argument('-b','--background', help='Daemonise into the background on startup', action="store_true")
@@ -14,7 +25,7 @@ def main():
     parser.add_argument('action', nargs='?', default='run', help='Action to take (run or init)')
     parser.add_argument('appname', nargs='?', default='app', help='Application name to run')
     parser.add_argument('-n','--procname', help='Change the process name to this (requires setproctitle)', required=False)
-    args = parser.parse_args()
+    args = parser.parse_args(incept_args)
 
     incept.prestart(args)
 
