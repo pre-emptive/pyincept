@@ -5,6 +5,7 @@ import argparse
 import os
 import imp
 import incept
+import traceback
 
 def main():
     # We pass any arguments beyond "--" to the application we call (which can do its own command line
@@ -53,7 +54,8 @@ def main():
                 incept.logging.exception("Uncaught Exception: %s: %s" % (type(e), e))
             else:
                 # TODO: Print out stacktrace here!
-                print("Uncaught Exception: %s" % (e))
+                print("Uncaught Exception: %s: %s" % (type(e), e))
+                traceback.print_exc()
         incept.end()
     elif args.action == 'init':
         incept.init()
