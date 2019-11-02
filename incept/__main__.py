@@ -41,7 +41,9 @@ def main():
             try:
                 import setproctitle
                 setproctitle.setproctitle(args.procname)
-            except:
+            except Exception as e:
+                if incept.logging:
+                    incept.logging.debug("Couldn't set the process name: %s" % (e))
                 pass
 
         try:

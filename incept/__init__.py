@@ -62,79 +62,99 @@ def init():
     _rcopy("%s/skel" % (module_path), ".")
     print("Incept project initialised")
 
+class AttrDict(dict):
+    def __init__(self, *args, **kwargs):
+        super(AttrDict, self).__init__(*args, **kwargs)
+        self.__dict__ = self
+
 # get going...
-def start(args):
+def start(args, todo=None):
+
+    if todo is None:
+        todo = ['directory','logging','daemonise','redis','database','rabbitmq']
+
+    if isinstance(dict, args):
+        args = AttrDict(args)
+
     config_obj = InceptConfig()
     global config_data
     config_data = config_obj.get()
 
-    if args.directory:
-        working_directory = args.directory
-    else:
-        working_directory = os.getcwd()
+    if 'directory' in todo:
+        if args.directory:
+            working_directory = args.directory
+        else:
+            working_directory = os.getcwd()
 
-    site.addsitedir(working_directory)
+        site.addsitedir(working_directory)
 
-    if 'logging' in config_data:
-       global logging
-       logging_obj = InceptLogging(config_data)
-       logging = logging_obj.logging
-
-       _get_filenos_from_logging(logging)
-
-    # daemonise if required to do so
-    if args.background:
-        import daemon
-        import daemon.pidfile
-        daemon_args = {}
-        daemon_args['working_directory'] = working_directory
-        if args.pidfile:
-            daemon_args['pidfile'] = daemon.pidfile.PIDLockFile(args.pidfile)
-
+    if 'logging' in todo:
         if 'logging' in config_data:
-            # preserve any files opened by logging
-            # this won't preserve STDOUT/STDERR, even if
-            # logging said to use them.
-            daemon_args['files_preserve'] = _get_filenos_from_logging(Incept.logging)
+            global logging
+            logging_obj = InceptLogging(config_data)
+            logging = logging_obj.logging
 
-        global daemon_context
-        daemon_context = daemon.DaemonContext(**daemon_args)
-        daemon_context.open()
+            _get_filenos_from_logging(logging)
 
-    if 'redis' in config_data:
-        import redis
-        global redis
-        redis = redis.Redis(**config_data['redis'])
-        redis.ping()
+    if 'daemonise' in todo:
+        # daemonise if required to do so
+        if args.background:
+            import daemon
+            import daemon.pidfile
+            daemon_args = {}
+            daemon_args['working_directory'] = working_directory
+            if args.pidfile:
+                daemon_args['pidfile'] = daemon.pidfile.PIDLockFile(args.pidfile)
 
-    if 'database' in config_data:
-        from sqlalchemy import create_engine
-        db_config = {}
-        for key,value in config_data['database'].items():
-            if key not in ['url']:
-                db_config[key] = value
-        global database_engine
-        global database
-        database_engine = create_engine(config_data['database']['url'], **db_config)
-        database = database_engine.connect()
+            if 'logging' in config_data:
+                # preserve any files opened by logging
+                # this won't preserve STDOUT/STDERR, even if
+                # logging said to use them.
+                daemon_args['files_preserve'] = _get_filenos_from_logging(Incept.logging)
 
-    if 'rabbitmq' in config_data:
-        import pika
-        for required in ['username','password','host']:
-            if required not in config_data['rabbitmq']:
-                raise KeyError('%s not in RabbitMQ config' % (required))
-        credentials = pika.PlainCredentials(config_data['rabbitmq']['username'], config_data['rabbitmq']['password'])
-        try:
-            vhost = config_data['rabbitmq']['vhost']
-        except KeyError:
-            vhost = '/'
-        parameters = pika.ConnectionParameters(
+            global daemon_context
+            daemon_context = daemon.DaemonContext(**daemon_args)
+            daemon_context.open()
+
+    if 'redis' in todo:
+        if 'redis' in config_data:
+            import redis
+            global redis
+            redis = redis.Redis(**config_data['redis'])
+            redis.ping()
+
+    if 'database' in todo:
+        if 'database' in config_data:
+            from sqlalchemy import create_engine
+            db_config = {}
+            for key, value in config_data['database'].items():
+                if key not in ['url']:
+                    db_config[key] = value
+            global database_engine
+            global database
+            database_engine = create_engine(config_data['database']['url'], **db_config)
+            database = database_engine.connect()
+
+    if 'rabbitmq' in todo:
+        if 'rabbitmq' in config_data:
+            import pika
+            for required in ['username', 'password', 'host']:
+                if required not in config_data['rabbitmq']:
+                    raise KeyError('%s not in RabbitMQ config' % (required))
+            credentials = pika.PlainCredentials(config_data['rabbitmq']['username'],
+                                                config_data['rabbitmq']['password'])
+            try:
+                vhost = config_data['rabbitmq']['vhost']
+            except KeyError:
+                vhost = '/'
+            parameters = pika.ConnectionParameters(
                 host=config_data['rabbitmq']['host'],
                 credentials=credentials,
                 virtual_host=vhost
-        )
-        global rabbitmq
-        rabbitmq = pika.BlockingConnection(parameters)
+            )
+            global rabbitmq
+            rabbitmq = pika.BlockingConnection(parameters)
+
 
 def end():
     global daemon_context
