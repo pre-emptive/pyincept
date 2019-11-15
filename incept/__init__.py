@@ -73,7 +73,7 @@ def start(args, todo=None):
     if todo is None:
         todo = ['directory','logging','daemonise','redis','database','rabbitmq']
 
-    if isinstance(dict, args):
+    if isinstance(args, dict):
         args = AttrDict(args)
 
     config_obj = InceptConfig()
