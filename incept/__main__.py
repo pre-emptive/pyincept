@@ -2,7 +2,6 @@ from __future__ import print_function
 
 import sys
 import argparse
-import os
 import imp
 import incept
 import traceback
@@ -25,7 +24,7 @@ def main():
     parser.add_argument('-d','--directory', help='Directory to change into before running', required=False)
     parser.add_argument('-b','--background', help='Daemonise into the background on startup', action="store_true")
     parser.add_argument('-p','--pidfile', help='Location to write a PID file')
-    parser.add_argument('action', nargs='?', default='run', help='Action to take (run or init)')
+    parser.add_argument('action', nargs='?', default='run', help='Action to take (run, test or init)')
     parser.add_argument('appname', nargs='?', default='app', help='Application name to run')
     parser.add_argument('-n','--procname', help='Change the process name to this (requires setproctitle)', required=False)
     args = parser.parse_args(incept_args)
@@ -59,9 +58,18 @@ def main():
                 print("Uncaught Exception: %s: %s" % (type(e), e))
                 traceback.print_exc()
         incept.end()
+    elif args.action == 'test':
+        incept.start(args, daemonise=False)
+        from pytest import main
+        out = main()
+        incept.end()
+        sys.exit(out)
+
     elif args.action == 'init':
         incept.init()
 
+    else:
+        print("Unknown action '%s'")
 
 if __name__ == '__main__':
     main()

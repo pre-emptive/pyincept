@@ -13,8 +13,8 @@ setup(
     name='pyincept',
     url='https://github.com/pre-emptive/pyincept',
     author='Ralph Bolton',
-    author_email='devnull@coofercat.com',
-    version='1.0.14',
+    author_email='devnull@pre-emptive.net',
+    version='1.0.15',
     packages=['incept'],
     entry_points={
         'console_scripts': [

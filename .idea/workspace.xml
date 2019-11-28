@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0534fe3-0d10-4bb2-8338-b94c73b873a1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/incept/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/incept/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/incept" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/incept" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/incept/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/incept/__main__.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,11 +12,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/incept/__main__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" column="75" selection-start-line="45" selection-start-column="75" selection-end-line="45" selection-end-column="75" />
+            <state relative-caret-position="-286">
+              <caret line="26" column="94" selection-start-line="26" selection-start-column="94" selection-end-line="26" selection-end-column="94" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -37,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/incept">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="313">
-              <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
+              <caret line="41" column="33" lean-forward="true" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="33" />
               <folding>
                 <element signature="e#19#56#0" expanded="true" />
               </folding>
@@ -97,9 +95,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/incept/__main__.py" />
         <option value="$PROJECT_DIR$/incept/__init__.py" />
         <option value="$PROJECT_DIR$/scripts/incept" />
+        <option value="$PROJECT_DIR$/incept/__main__.py" />
       </list>
     </option>
   </component>
@@ -222,16 +220,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/incept/__main__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="45" column="75" selection-start-line="45" selection-start-column="75" selection-end-line="45" selection-end-column="75" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/incept/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-821">
@@ -242,9 +230,19 @@
     <entry file="file://$PROJECT_DIR$/scripts/incept">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
-          <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
+          <caret line="41" column="33" lean-forward="true" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="33" />
           <folding>
             <element signature="e#19#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/incept/__main__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-286">
+          <caret line="26" column="94" selection-start-line="26" selection-start-column="94" selection-end-line="26" selection-end-column="94" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
