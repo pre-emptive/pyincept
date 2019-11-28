@@ -2,10 +2,9 @@
 
 from __future__ import print_function
 from . import incept
-import sys
 import argparse
-import os
 import imp
+import traceback
 
 parser = argparse.ArgumentParser(description='Incept framework for non-UI Python applications')
 parser.add_argument('-d','--directory', help='Directory to change into before running', required=False)
@@ -39,9 +38,13 @@ if args.action == 'run':
         if incept.logging:
             incept.logging.exception("Uncaught Exception: %s: %s" % (type(e), e))
         else:
-            # TODO: Print out stacktrace here!
             print("Uncaught Exception: %s" % (e))
+            traceback.print_exc()
     incept.end()
+elif args.action == 'test':
+    incept.start(args, daemonise=False)
+    from pytest import main
+    main()
 elif args.action == 'init':
     incept.init()
 

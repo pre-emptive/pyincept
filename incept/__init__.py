@@ -3,8 +3,6 @@ from __future__ import print_function
 from .inceptconfig import InceptConfig
 from .inceptlogging import InceptLogging
 
-import argparse
-import sys
 import os
 import shutil, errno
 import site
@@ -68,10 +66,20 @@ class AttrDict(dict):
         self.__dict__ = self
 
 # get going...
-def start(args, todo=None):
+def start(args, **todo_options):
 
-    if todo is None:
-        todo = ['directory','logging','daemonise','redis','database','rabbitmq']
+    todo = {
+        'directory': True,
+        'logging': True,
+        'daemonise': True,
+        'redis': True,
+        'database': True,
+        'rabbitmq': True,
+    }
+
+    for item in todo_options.keys():
+        if item in todo:
+            todo[item] = todo_options[item]
 
     if isinstance(args, dict):
         args = AttrDict(args)
@@ -80,7 +88,7 @@ def start(args, todo=None):
     global config_data
     config_data = config_obj.get()
 
-    if 'directory' in todo:
+    if todo['directory']:
         if args.directory:
             working_directory = args.directory
         else:
@@ -88,7 +96,7 @@ def start(args, todo=None):
 
         site.addsitedir(working_directory)
 
-    if 'logging' in todo:
+    if todo['logging']:
         if 'logging' in config_data:
             global logging
             logging_obj = InceptLogging(config_data)
@@ -96,7 +104,7 @@ def start(args, todo=None):
 
             _get_filenos_from_logging(logging)
 
-    if 'daemonise' in todo:
+    if todo['daemonise']:
         # daemonise if required to do so
         if args.background:
             import daemon
@@ -116,14 +124,14 @@ def start(args, todo=None):
             daemon_context = daemon.DaemonContext(**daemon_args)
             daemon_context.open()
 
-    if 'redis' in todo:
+    if todo['redis']:
         if 'redis' in config_data:
             import redis
             global redis
             redis = redis.Redis(**config_data['redis'])
             redis.ping()
 
-    if 'database' in todo:
+    if todo['database']:
         if 'database' in config_data:
             from sqlalchemy import create_engine
             db_config = {}
@@ -135,7 +143,7 @@ def start(args, todo=None):
             database_engine = create_engine(config_data['database']['url'], **db_config)
             database = database_engine.connect()
 
-    if 'rabbitmq' in todo:
+    if todo['rabbitmq']:
         if 'rabbitmq' in config_data:
             import pika
             for required in ['username', 'password', 'host']:
