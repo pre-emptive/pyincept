@@ -2,9 +2,14 @@ from __future__ import print_function
 
 import sys
 import argparse
-import imp
 import incept
 import traceback
+
+# Python 3.12 onwards uses importlib
+try:
+    import imp
+except:
+    from . import inceptimportlib as imp
 
 def main():
     # We pass any arguments beyond "--" to the application we call (which can do its own command line
